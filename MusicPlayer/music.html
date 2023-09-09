@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Playlist</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+    <div class="main_div">
+        <div class="music_container">
+            <h2 id="title"> Jaane Na Dunga Kahin </h2>
+            <h3 id="artist">Arman Malik</h3>
+            <div class="img_container">
+                <img src="images/Mp3-1.png" alt="">
+            </div>
+            <audio src="Musics/Mp3-1.mp3"></audio>
+            <!----controls----->
+            <div class="music_control">
+                <i class="fas fa-backward" id="prev" title="Previous"  ></i>
+                <i class="fas fa-play main_button" id="play" title="Play"  ></i>
+                <i class="fas fa-forward" id="next" title="Next"></i>
+            </div>  
+        </div>
+    </div>
+    <script>
+        const music = document.querySelector("audio");
+        const img = document.querySelector("img");
+        const play = document.getElementById("play");
+        const title = document.getElementById("title");
+        const artist = document.getElementById("artist");
+        const prev = document.getElementById("prev");
+        const next = document.getElementById("next");
+
+        const songs = [{
+            name:"Mp3-1",
+            title:"Jaane Na Dunga Kahin",
+            artist:"Arman Malik"
+        },
+        {
+            name:"Mp3-2",
+            title:"Luka Chuppi Bhaut Hui",
+            artist:"Lata Mangeshkar"
+        },
+        {
+            name:"Mp3-3",
+            title:"Old Songs Mashup",
+            artist:"Siddhart"
+        },
+        {
+            name:"Mp3-4",
+            title:"Old songs",
+            artist:"Kishore Kumar"
+        },
+        {
+            name:"Mp3-5",
+            title:"Dekha Ek Khwab",
+            artist:"Lata Mangeshkar"
+        },
+        {
+            name:"Mp3-6",
+            title:" Old Mashup",
+            artist:"Udit Narayan"
+        }
+        ]
+        
+        let isPlaying = false;
+         const playMusic = () => {
+            isPlaying = true;
+            music.play();
+            play.classList.replace("fa-play","fa-pause");
+            img.classList.add("anime");
+        };
+
+        //for pause function
+        const pauseMusic = () => {
+            isPlaying = false;
+            music.pause();
+            play.classList.replace("fa-pause","fa-play");
+            img.classList.remove("anime");
+        };
+        play.addEventListener("click",() =>{
+            isPlaying ? pauseMusic() : playMusic();
+        });
+
+        // changing the music data
+        const loadSong = (songs) =>{
+          title.textContent = songs.title;
+          artist.textContent = songs.artist;
+          music.src = "Musics/" +songs.name+".mp3";
+          img.src ="Images/"+songs.name+".png";
+        };
+         songIndex = 0;
+        const nextSong = () => {
+            songIndex = (songIndex + 1)% songs.length;
+            loadSong(songs[songIndex]);  
+            playMusic();  
+        }
+
+        const prevSong = () => {
+            songIndex = (songIndex - 1 + songs.length)% songs.length;
+            loadSong(songs[songIndex]);  
+            playMusic();  
+        }
+
+        next.addEventListener("click", nextSong);
+        prev.addEventListener("click", prevSong);
+    </script>
+</body>
+</html>
